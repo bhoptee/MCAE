@@ -1,0 +1,191 @@
+<script type="text/javascript">
+  
+  function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+          var date = new Date();
+          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+          expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + (value || "") + expires + "; path=/; domain=.127.0.0.1";
+  }
+
+  function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+  }
+
+  function getUtmFromReferrer(currentReferrer) {
+    var refDomains = {
+        'google.com': ['google', 'organic'],
+        'bing.com': ['bing', 'organic'],
+        'linkedin.com': ['linkedin', 'organic'],
+        'x.com': ['x', 'organic'],
+        'instagram.com': ['instagram', 'organic'],
+        'facebook.com': ['facebook', 'organic'],
+        'greensheet.com': ['greensheet', 'referral'],
+        'yahoo.com': ['yahoo', 'organic'],
+        'reddit.com': ['reddit', 'organic']
+    };
+
+    for (var domain in refDomains) {
+        if (currentReferrer.includes(domain)) {
+            return refDomains[domain];
+        }
+    }
+    return ['Web', 'direct'];
+  }
+
+// Get the first vistied page URL
+const firstVisitedPage = getCookie('first_visited_page');
+    if (!firstVisitedPage) {
+      setCookie('first_visited_page', encodeURIComponent(window.location.href));
+    }
+var isVisited = getCookie('visited') === null;
+var currentPage = window.location.href;
+var currentReferrer = document.referrer || 'null';
+
+// Define utmParams here so it's accessible throughout the script
+const utmParams = new URLSearchParams(window.location.search);
+var utmSource = utmParams.get('utm_source');
+var utmMedium = utmParams.get('utm_medium');
+var refUtm = getUtmFromReferrer(currentReferrer);
+var liFatId = utmParams.get('li_fat_id') || 'null';
+var msclkid = utmParams.get('msclkid') || 'null';
+var utmCampaign = utmParams.get('utm_campaign') || 'null';
+var utmContent = utmParams.get('utm_content') || 'null';
+var utmTerm = utmParams.get('utm_term') || 'null';
+var utmAdgroupid = utmParams.get('adgroupid') || 'null';
+var utmCampaignid = utmParams.get('campaignid') || 'null';
+var utmCreative = utmParams.get('creative') || 'null';
+var utmDevice = utmParams.get('device') || 'null';
+var utmKeyword = utmParams.get('keyword') || 'null';
+var utmNetwork = utmParams.get('network') || 'null';
+var utmTargetid = utmParams.get('targetid') || 'null';
+var utmChannelType = utmParams.get('channel_type') || 'Direct Response';
+var utmfbclid = utmParams.get('fbclid') || 'null';
+var utmgclid = utmParams.get('gclid') || 'null';
+var utmsfcid = utmParams.get('sfcid') || 'null';
+var utmMatchtype = utmParams.get('matchtype') || 'null';
+var utmlp = getCookie('first_visited_page')
+
+
+
+// Use refUtm if utm parameters are not present in the URL
+utmSource = utmSource || refUtm[0];
+utmMedium = utmMedium || refUtm[1];
+
+  setCookie('utm_source', utmSource);
+  setCookie('utm_medium', utmMedium);
+  setCookie('utm_term', utmTerm);
+  setCookie('utm_content', utmContent);
+  setCookie('utm_campaign', utmCampaign);
+  setCookie('utm_lp', utmlp);
+  setCookie('last_referrer', currentReferrer);
+  setCookie('last_conversion_page', currentPage);
+  setCookie('li_fat_id', liFatId );
+  setCookie('msclkid', msclkid);
+  setCookie('gclid', utmgclid);
+  setCookie('fbclid', utmfbclid);
+  setCookie('sfcid', utmsfcid);
+  setCookie('utm_adgroup', utmAdgroupid);
+  setCookie('utm_campaignid', utmCampaignid);
+  setCookie('utm_creative', utmCreative);
+  setCookie('utm_device', utmDevice);
+  setCookie('utm_keyword', utmKeyword);
+  setCookie('utm_matchtype', utmMatchtype);
+  setCookie('utm_network', utmNetwork);
+  setCookie('utm_targetid', utmTargetid);
+  setCookie('channel_type', utmChannelType);
+
+
+  if (isVisited) {
+    setCookie('visited', 'true', 90);
+    setCookie('ft_utm_Source', utmSource, 90);
+    setCookie('ft_utm_Medium', utmMedium, 90);
+    setCookie('ft_utm_Term', utmTerm, 90);
+    setCookie('ft_utm_Content', utmContent, 90);
+    setCookie('ft_utm_Campaign', utmCampaign, 90);
+    setCookie('ft_utm_lp', utmlp, 90);
+    setCookie('ft_referrer', currentReferrer, 90);
+    setCookie('ft_li_fat_id', liFatId, 90);
+    setCookie('ft_msclkid', msclkid, 90);
+    setCookie('ft_gclid', utmgclid, 90);
+    setCookie('ft_sfcid', utmsfcid, 90);
+    setCookie('ft_fbclid', utmfbclid, 90);
+    setCookie('ft_utm_adgroup', utmAdgroupid, 90);
+    setCookie('ft_utm_creative', utmCreative, 90);
+    setCookie('ft_utm_device', utmDevice, 90);
+    setCookie('ft_utm_keyword', utmKeyword, 90);
+    setCookie('ft_utm_matchtype', utmMatchtype, 90);
+    setCookie('ft_utm_campaignid', utmCampaignid, 90);
+    setCookie('ft_utm_network', utmNetwork, 90);
+    setCookie('ft_utm_targetid', utmTargetid, 90);
+    setCookie('ft_channel_type', utmChannelType, 90);
+    
+  }
+
+  function populateField(className, cookieName) {
+    var fieldValue = getCookie(cookieName) || '';
+    var field = document.querySelector('.' + className + ' input');
+    if (field) {
+        field.value = fieldValue;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    populateField('ft_gclid', 'ft_gclid');
+    populateField('ft_li_fat_id', 'ft_li_fat_id');
+    populateField('ft_msclkid', 'ft_msclkid');
+    populateField('ft_fbclid', 'ft_fbclid');
+    populateField('ft_utm_campaign', 'ft_utm_Campaign');
+    populateField('ft_utm_content', 'ft_utm_Content');
+    populateField('ft_utm_term', 'ft_utm_Term');
+    populateField('ft_utm_source', 'ft_utm_Source');
+    populateField('ft_utm_medium', 'ft_utm_Medium');
+    populateField('ft_utm_adgroupid', 'ft_utm_adgroup', );
+    populateField('ft_utm_creative', 'ft_utm_creative', );
+    populateField('ft_utm_device', 'ft_utm_device', );
+    populateField('ft_utm_keyword', 'ft_utm_keyword', );
+    populateField('ft_utm_network', 'ft_utm_network', );
+    populateField('ft_utm_matchtype', 'ft_utm_matchtype', );
+    populateField('ft_utm_campaignid', 'ft_utm_campaignid', );
+    populateField('ft_utm_targetid', 'ft_utm_targetid', );
+    populateField('ft_channel_type', 'ft_channel_type', );
+
+    populateField('ft_sfcid', 'ft_sfcid');
+    populateField('ft_referrer', 'ft_referrer');
+    populateField('ft_lp', 'ft_utm_lp');
+
+    populateField('gclid', 'gclid');
+    populateField('li_fat_id', 'li_fat_id');
+    populateField('msclkid', 'msclkid');
+    populateField('fbclid', 'fbclid');
+    populateField('utm_campaign', 'utm_campaign');
+    populateField('utm_content', 'utm_content');
+    populateField('utm_term', 'utm_term');
+    populateField('utm_medium', 'utm_medium');
+    populateField('utm_source', 'utm_source');
+    populateField('utm_adgroupid', 'utm_adgroup');
+    populateField('utm_creative', 'utm_creative');
+    populateField('utm_device', 'utm_device');
+    populateField('utm_keyword', 'utm_keyword');
+    populateField('utm_network', 'utm_network');
+    populateField('utm_matchtype', 'utm_matchtype');
+    populateField('utm_campaignid', 'utm_campaignid');
+    populateField('utm_targetid', 'utm_targetid');
+    populateField('channel_type', 'channel_type');
+
+    populateField('lt_lp', 'utm_lp');
+    populateField('conversion_url', 'last_conversion_page');
+    populateField('lt_Referrer', 'last_referrer');
+    populateField('lt_sfcid', 'sfcid');
+
+  });
+</script>
